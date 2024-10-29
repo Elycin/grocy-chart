@@ -1,6 +1,6 @@
 # Storage configuration
 storageClass: "nfs-storage"
-basePath: "/mnt/spinning-rust"
+basePath: "/mnt/spinning-rust/kubestorage"
 
 # Deployment configuration
 replicaCount: 1
