@@ -9,9 +9,7 @@ spec:
   selector:
     app: {{ .Release.Name }}-grocy
   ports:
-    - protocol: TCP
+    - name: grocy-http  # Unique name for the Grocy service port
+      protocol: TCP
       port: {{ .Values.service.port }}
       targetPort: 80
-    - protocol: TCP
-      port: {{ .Values.barcodebuddy.port }}
-      targetPort: {{ .Values.barcodebuddy.port }}
