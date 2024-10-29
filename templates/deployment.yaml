@@ -33,6 +33,9 @@ spec:
               mountPropagation: HostToContainer
               subPath: viewcache
               readOnly: false
+            - name: scanner-device
+              mountPath: {{ .Values.scannerDevicePath }}
+              readOnly: true
     
       volumes:
         - name: grocy-data
