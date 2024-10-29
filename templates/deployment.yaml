@@ -25,15 +25,28 @@ spec:
             - containerPort: 80
           volumeMounts:
             - name: grocy-data
-              mountPath: {{ .Values.basePath }}/grocy-data
+              mountPath: /var/www/data  # Persistent data directory
+            - name: tmp-dir
+              mountPath: /tmp
+            - name: viewcache
+              mountPath: /var/www/data/viewcache
+              mountPropagation: HostToContainer
+              subPath: viewcache
+              readOnly: false
             - name: scanner-device
-              mountPath: /dev/input/scanner  # Mounts the scanner device inside the container
-              readOnly: true  # Prevents writing to the device
+              mountPath: {{ .Values.scannerDevicePath }}  # Uses scannerDevicePath from values.yaml
+              readOnly: true
       volumes:
         - name: grocy-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-grocy-pvc
+        - name: tmp-dir
+          emptyDir:
+            medium: Memory
+        - name: viewcache
+          emptyDir:
+            medium: Memory
         - name: scanner-device
           hostPath:
             path: {{ .Values.scannerDevicePath }}
-            type: CharDevice  # Specifies that this is a character device (common for input devices)
+            type: CharDevice
