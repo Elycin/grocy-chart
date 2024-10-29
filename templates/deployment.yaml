@@ -37,14 +37,14 @@ spec:
               mountPath: {{ .Values.scannerDevicePath }}
               readOnly: true
         - name: barcodebuddy  # BarcodeBuddy container
-          image: forceu/barcodebuddy:latest
+          image: f0rc3/barcodebuddy:latest
           securityContext:
             privileged: true
           ports:
             - containerPort: {{ .Values.barcodebuddy.port }}
           env:
             - name: GROCY_URL
-              value: "http://localhost:80"  # Assumes both services run in the same pod
+              value: "http://{{ .Release.Name }}-grocy.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.port }}"
           volumeMounts:
             - name: barcodebuddy-data
               mountPath: /config  # Separate storage path for BarcodeBuddy data
