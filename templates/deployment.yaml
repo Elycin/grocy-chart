@@ -42,6 +42,8 @@ spec:
             privileged: true
           ports:
             - containerPort: {{ .Values.barcodebuddy.port }}
+          args:
+            - "{{ .Values.scannerDevicePath }}"  # Pass the device path as an argument
           env:
             - name: GROCY_URL
               value: "http://{{ .Release.Name }}-grocy.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.port }}"
