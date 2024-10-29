@@ -12,4 +12,5 @@ service:
   port: 80
 
 # Scanner device configuration
-scannerDevicePath: "/dev/input/scanner"  # Path on the host where the scanner device is located
+scannerDevicePath: "/dev/input/by-id/usb-HELLO_USB__i_MM32_Custm_HID_MM32-event-kbd"  # Default path for the keyboard scanner device
+
