@@ -33,30 +33,11 @@ spec:
               mountPropagation: HostToContainer
               subPath: viewcache
               readOnly: false
-        - name: barcodebuddy
-          image: f0rc3/barcodebuddy:latest
-          securityContext:
-            privileged: true  # Required to access devices
-          ports:
-            - containerPort: {{ .Values.barcodebuddy.port }}
-          env:
-            - name: GROCY_URL
-              value: "http://{{ .Release.Name }}-grocy.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.port }}"
-            - name: ATTACH_BARCODESCANNER
-              value: "true"  # Enable barcode scanner attachment
-          volumeMounts:
-            - name: barcodebuddy-data
-              mountPath: /config
-            - name: scanner-device
-              mountPath: {{ .Values.scannerDevicePath }}
-              readOnly: true  # Prevents accidental write operations
+    
       volumes:
         - name: grocy-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-grocy-pvc
-        - name: barcodebuddy-data
-          persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-barcodebuddy-pvc
         - name: tmp-dir
           emptyDir:
             medium: Memory
