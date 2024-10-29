@@ -1,0 +1,15 @@
+# Storage configuration
+storageClass: "nfs-storage"
+basePath: "/mnt/spinning-rust"
+
+# Deployment configuration
+replicaCount: 1
+nodeName: "worker1"
+
+# Service configuration
+service:
+  type: LoadBalancer
+  port: 80
+
+# Scanner device configuration
+scannerDevicePath: "/dev/input/scanner"  # Path on the host where the scanner device is located

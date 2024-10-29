@@ -1,0 +1,6 @@
+apiVersion: v2
+name: grocy
+description: A Helm chart for Grocy - a self-hosted groceries list tracking software
+type: application
+version: 0.1.0
+appVersion: "latest"  # Use the appropriate version of Grocy if required

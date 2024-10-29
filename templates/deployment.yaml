@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-grocy
+  labels:
+    {{- include "grocy.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-grocy
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-grocy
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: {{ .Values.nodeName }}
+      containers:
+        - name: grocy
+          image: linuxserver/grocy:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: grocy-data
+              mountPath: {{ .Values.basePath }}/grocy-data
+            - name: scanner-device
+              mountPath: /dev/input/scanner  # Mounts the scanner device inside the container
+              readOnly: true  # Prevents writing to the device
+      volumes:
+        - name: grocy-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-grocy-pvc
+        - name: scanner-device
+          hostPath:
+            path: {{ .Values.scannerDevicePath }}
+            type: CharDevice  # Specifies that this is a character device (common for input devices)
