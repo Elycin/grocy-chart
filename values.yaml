@@ -14,7 +14,7 @@ service:
 # BarcodeBuddy-specific configuration
 barcodebuddy:
   enabled: true
-  port: 7272
+  port: 80
 
 # Scanner device configuration
 scannerDevicePath: "/dev/input/by-id/usb-HELLO_USB__i_MM32_Custm_HID_MM32-event-kbd"
