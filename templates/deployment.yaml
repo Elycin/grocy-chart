@@ -25,7 +25,7 @@ spec:
             - containerPort: 80
           volumeMounts:
             - name: grocy-data
-              mountPath: /var/www/data  # Persistent data directory
+              mountPath: /var/www/data
             - name: tmp-dir
               mountPath: /tmp
             - name: viewcache
@@ -34,12 +34,30 @@ spec:
               subPath: viewcache
               readOnly: false
             - name: scanner-device
-              mountPath: {{ .Values.scannerDevicePath }}  # Uses scannerDevicePath from values.yaml
+              mountPath: {{ .Values.scannerDevicePath }}
+              readOnly: true
+        - name: barcodebuddy  # BarcodeBuddy container
+          image: forceu/barcodebuddy:latest
+          securityContext:
+            privileged: true
+          ports:
+            - containerPort: {{ .Values.barcodebuddy.port }}
+          env:
+            - name: GROCY_URL
+              value: "http://localhost:80"  # Assumes both services run in the same pod
+          volumeMounts:
+            - name: barcodebuddy-data
+              mountPath: /config  # Separate storage path for BarcodeBuddy data
+            - name: scanner-device
+              mountPath: {{ .Values.scannerDevicePath }}
               readOnly: true
       volumes:
         - name: grocy-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-grocy-pvc
+        - name: barcodebuddy-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-barcodebuddy-pvc
         - name: tmp-dir
           emptyDir:
             medium: Memory
