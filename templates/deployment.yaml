@@ -37,13 +37,9 @@ spec:
               mountPath: {{ .Values.scannerDevicePath }}
               readOnly: true
         - name: barcodebuddy  # BarcodeBuddy container
-          image: f0rc3/barcodebuddy:latest
-          securityContext:
-            privileged: true
+          image: f0rc3/barcodebuddy-docker:latest
           ports:
             - containerPort: {{ .Values.barcodebuddy.port }}
-          args:
-            - "{{ .Values.scannerDevicePath }}"  # Pass the device path as an argument
           env:
             - name: GROCY_URL
               value: "http://{{ .Release.Name }}-grocy.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.port }}"
