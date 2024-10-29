@@ -34,7 +34,7 @@ spec:
               subPath: viewcache
               readOnly: false
         - name: barcodebuddy
-          image: forceu/barcodebuddy:latest
+          image: f0rc3/barcodebuddy:latest
           securityContext:
             privileged: true  # Required to access devices
           ports:
