@@ -4,7 +4,7 @@ basePath: "/mnt/spinning-rust"
 
 # Deployment configuration
 replicaCount: 1
-nodeName: "worker1"
+nodeName: "k8s-worker1"
 
 # Service configuration
 service:
