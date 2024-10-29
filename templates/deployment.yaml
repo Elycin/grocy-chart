@@ -46,7 +46,7 @@ spec:
             - name: GROCY_URL
               value: "http://{{ .Release.Name }}-grocy.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.port }}"
             - name: ATTACH_BARCODESCANNER
-              value: true
+              value: "true"
           volumeMounts:
             - name: barcodebuddy-data
               mountPath: /config  # Separate storage path for BarcodeBuddy data
